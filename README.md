@@ -1,2 +1,2 @@
 # todo
-Full stack todo list project.
+Full stack todo list solution.
