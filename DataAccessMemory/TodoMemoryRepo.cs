@@ -1,7 +1,6 @@
 ﻿using Interfaces;
 using Microsoft.Extensions.Logging;
 using Models;
-using System.Collections;
 
 namespace DataAccessMemory
 {
@@ -12,12 +11,17 @@ namespace DataAccessMemory
         {
             _logger = logger;
 
-            var todo1 = new Todo { TodoUId = new Guid("3fa85f64-5717-4562-b3fc-2c963f66afa6"), TodoText = "Replace old outlets with GFCI.", DueDate = DateTime.Now.AddDays(-2), CreatedDate = DateTime.Now.AddDays(-5) };
+            var todo1 = new Todo { 
+                TodoUId = new Guid("3fa85f64-5717-4562-b3fc-2c963f66afa6"), 
+                TodoText = "Replace old outlets with GFCI.", 
+                DueDate = DateTime.Now.AddDays(-2), 
+                CreatedDate = DateTime.Now.AddDays(-5) 
+            };
             var todo1a = new Todo { TodoUId = Guid.NewGuid(), TodoText = "Go to Lowes and buy GFCI outlet.", DueDate = DateTime.Now.AddDays(-2), CreatedDate = DateTime.Now.AddDays(-5), ParentTodoUId = todo1.TodoUId };
             var todo1b = new Todo { TodoUId = Guid.NewGuid(), TodoText = "Replace the outlets.", DueDate = DateTime.Now.AddDays(-2), CreatedDate = DateTime.Now.AddDays(-5), ParentTodoUId = todo1.TodoUId };
             todo1.SubTodos = new List<Todo> { todo1a, todo1b };
 
-            var todo2 = new Todo { TodoUId = Guid.NewGuid(), TodoText = "Clean the house.", DueDate = DateTime.Now.AddDays(-2), CreatedDate = DateTime.Now.AddDays(-3) };
+            var todo2 = new Todo { TodoUId = Guid.NewGuid(), TodoText = "Clean the house.", DueDate = DateTime.Now.AddDays(-2), CreatedDate = DateTime.Now.AddDays(-3), IsComplete = true };
             var todo3 = new Todo { TodoUId = Guid.NewGuid(), TodoText = "Do the laundry.", DueDate = DateTime.Now.AddHours(-5), CreatedDate = DateTime.Now };
 
             Todos = [todo1, todo2, todo3];
