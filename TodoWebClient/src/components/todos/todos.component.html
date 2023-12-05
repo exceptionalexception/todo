@@ -10,7 +10,7 @@
         <mat-table #table [dataSource]="todos">
             <ng-container matColumnDef="todo">
               <mat-header-cell *matHeaderCellDef>Todo</mat-header-cell>
-              <mat-cell *matCellDef="let todo"> {{todo.text}} </mat-cell>
+              <mat-cell *matCellDef="let todo"> {{todo.todoText}} </mat-cell>
             </ng-container>
         
             <ng-container matColumnDef="dueDate">

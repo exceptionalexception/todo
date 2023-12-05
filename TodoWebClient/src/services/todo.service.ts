@@ -13,7 +13,7 @@ export class TodoService {
   constructor(private httpClient: HttpClient) { }
 
   getTodos(): Observable<Todo[]> {
-    return this.httpClient.get<Todo[]>(`${AppConstants.ApiRoot}/api/todo`);
+    return this.httpClient.get<Todo[]>(`${AppConstants.ApiRoot}/todo`);
   }
 
 }
