@@ -1,0 +1,26 @@
+<div class="container">
+    <div class="row mb-40">
+        <button mat-raised-button color="accent" (click)="openTodoDialog()">
+            <mat-icon>add</mat-icon>
+            Add Todo
+        </button>
+    </div>
+    <div class="row">
+        <h1>Todos</h1>
+        <mat-table #table [dataSource]="todos">
+
+            <ng-container matColumnDef="todo">
+              <mat-header-cell *matHeaderCellDef>Todo</mat-header-cell>
+              <mat-cell *matCellDef="let todo"> {{todo.text}} </mat-cell>
+            </ng-container>
+        
+            <ng-container matColumnDef="dueDate">
+              <mat-header-cell *matHeaderCellDef>Due Date</mat-header-cell>
+              <mat-cell *matCellDef="let todo"> {{todo.dueDate}} </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="todoColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: todoColumns;"></mat-row>
+          </mat-table>
+    </div>
+</div>

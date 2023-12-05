@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="row">
+        <div class="col-10">
+            <mat-form-field>
+                <mat-label>Todo</mat-label>
+                <input matInput [value]="newTodo.title">
+            </mat-form-field>
+        </div>
+        <div class="col-2">
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
+</div>
