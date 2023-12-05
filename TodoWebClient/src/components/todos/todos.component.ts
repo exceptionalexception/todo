@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { Component, Inject } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { TodoDialogComponent } from '../todo-dialog/todo-dialog.component';
+import { TodoService } from '../../services/todo.service';
+import { Todo } from '../../models/todo.model';
 
 @Component({
   selector: 'todos',
@@ -9,25 +11,26 @@ import { TodoDialogComponent } from '../todo-dialog/todo-dialog.component';
 })
 export class TodosComponent {
 
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    @Inject(MatDialog) public dialog: MatDialog,
+    private todoService: TodoService) {}
 
   todoColumns = ['todo', 'dueDate'];
+  todos: Todo[] = [];
 
-   todos = [
-    { text: 'Jump', dueDate: '', subTodos: [] },
-    { text: 'Read', dueDate: '', subTodos: [] },
-    { text: 'Shower', dueDate: '', subTodos: [] },
-    { text: 'Think', dueDate: '', subTodos: [] },
-    { text: 'Breathe', dueDate: '', subTodos: [] },
-  ];
+  ngOnInit() {
+    this.todoService.getTodos().subscribe((todos: Todo[]) => {
+      this.todos = todos || [];
+    });
+  }
 
-  openTodoDialog(todoId: number): void {
+  openTodoDialog(todoId?: number): void {
     let dialogRef = this.dialog.open(TodoDialogComponent, {
       width: '500px',
       data: { todoId: todoId }
     });
 
-    dialogRef.afterClosed().subscribe(newTodo => {
+    dialogRef.afterClosed().subscribe((newTodo: Todo) => {
       console.log('The dialog was closed');
       this.todos.push(newTodo);
     });

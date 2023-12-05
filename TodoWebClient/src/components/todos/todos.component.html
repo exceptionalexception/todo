@@ -8,7 +8,6 @@
     <div class="row">
         <h1>Todos</h1>
         <mat-table #table [dataSource]="todos">
-
             <ng-container matColumnDef="todo">
               <mat-header-cell *matHeaderCellDef>Todo</mat-header-cell>
               <mat-cell *matCellDef="let todo"> {{todo.text}} </mat-cell>

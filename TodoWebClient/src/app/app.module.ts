@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { SharedModule } from '../shared/shared.module';
 import { TodosComponent } from '../components/todos/todos.component';
 import { TodoDialogComponent } from '../components/todo-dialog/todo-dialog.component';
+import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
 
 
 @NgModule({
@@ -18,10 +19,12 @@ import { TodoDialogComponent } from '../components/todo-dialog/todo-dialog.compo
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    SharedModule
+    SharedModule,
+    HttpClientModule
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    provideHttpClient(withFetch())
   ],
   bootstrap: [AppComponent]
 })
