@@ -15,7 +15,7 @@
     <ProjectReference Include="..\DataAccessMemory\DataAccessMemory.csproj" />
     <ProjectReference Include="..\DatabaseAccess\DataAccessDb.csproj" />
     <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
-    <ProjectReference Include="..\Todo.Business\Business.csproj" />
+    <ProjectReference Include="..\Business\Business.csproj" />
   </ItemGroup>
 
 </Project>
