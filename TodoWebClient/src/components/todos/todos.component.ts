@@ -15,7 +15,7 @@ export class TodosComponent {
     @Inject(MatDialog) public dialog: MatDialog,
     private todoService: TodoService) {}
 
-  todoColumns = ['todo', 'dueDate'];
+  todoColumns = ['todo', 'dueDate', 'createdDate', 'isComplete'];
   todos: Todo[] = [];
 
   ngOnInit() {

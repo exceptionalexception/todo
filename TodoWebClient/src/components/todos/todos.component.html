@@ -15,7 +15,17 @@
         
             <ng-container matColumnDef="dueDate">
               <mat-header-cell *matHeaderCellDef>Due Date</mat-header-cell>
-              <mat-cell *matCellDef="let todo"> {{todo.dueDate}} </mat-cell>
+              <mat-cell *matCellDef="let todo"> {{todo.dueDate | date:'dd/MM/yyyy hh:mm'}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="createdDate">
+                <mat-header-cell *matHeaderCellDef>Created Date</mat-header-cell>
+                <mat-cell *matCellDef="let todo"> {{todo.createdDate | date:'dd/MM/yyyy hh:mm'}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="isComplete">
+                <mat-header-cell *matHeaderCellDef>Completed</mat-header-cell>
+                <mat-cell *matCellDef="let todo"> {{(todo.isComplete ? '✅' : '❌')}} </mat-cell>
             </ng-container>
 
             <mat-header-row *matHeaderRowDef="todoColumns"></mat-header-row>
