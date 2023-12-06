@@ -1,13 +1,15 @@
 #todosContainer {
   textarea {
-    width: 60%;
-    min-height: 70px;
+    width: 50%;
+    max-width: 60%;
+    height: 80px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 2px;
     padding: 5px;
     font-family: Poppins, "Helvetica Neue", sans-serif;
     outline: none;
     margin-right: 15px;
+    resize: none;
   }
 
   .todos-header {
@@ -18,17 +20,22 @@
   }
 
   .todo-card-grids {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(550px, 1fr));
+    .todo-card {
+      border: 1px solid #ccc;
+      background-color: #fcfcff;
+      margin: 20px 20px 20px 0;
+      width: 20%;
+      float: left;
+    }
+
+    .todo-card, .sub-todo-card {
+        border: 1px solid #ccc;
+    }
+
     gap: 1.5rem;
 
-    .sub-todo-grids {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-      gap: 1rem;
-    }
     .mat-mdc-form-field {
-      width: 155px;;
+      width: 155px;
     }
   }
 }

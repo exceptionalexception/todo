@@ -24,8 +24,13 @@ namespace DataAccessMemory
 
             var todo2 = new Todo { TodoUId = Guid.NewGuid(), TodoText = "Clean the house.", DueDate = DateTime.Now.AddDays(-2), CreatedDate = DateTime.Now.AddDays(-3), IsComplete = true };
             var todo3 = new Todo { TodoUId = Guid.NewGuid(), TodoText = "Do the laundry.", DueDate = DateTime.Now.AddHours(-5), CreatedDate = DateTime.Now };
+            var todo4 = new Todo { TodoUId = Guid.NewGuid(), TodoText = "Sleep.", DueDate = DateTime.Now.AddHours(-5), CreatedDate = DateTime.Now };
+            var todo5 = new Todo { TodoUId = Guid.NewGuid(), TodoText = "Eat.", DueDate = DateTime.Now.AddHours(-5), CreatedDate = DateTime.Now };
+            var todo6 = new Todo { TodoUId = Guid.NewGuid(), TodoText = "Eat.", DueDate = DateTime.Now.AddHours(-5), CreatedDate = DateTime.Now };
+            var todo7 = new Todo { TodoUId = Guid.NewGuid(), TodoText = "Eat.", DueDate = DateTime.Now.AddHours(-5), CreatedDate = DateTime.Now };
+            var todo8 = new Todo { TodoUId = Guid.NewGuid(), TodoText = "Eat.", DueDate = DateTime.Now.AddHours(-5), CreatedDate = DateTime.Now };
 
-            Todos = [todo1, todo2, todo3];
+            Todos = [todo1, todo2, todo3, todo4, todo5, todo6, todo7, todo8];
         }
 
         private List<Todo> Todos { get; set; } = [];

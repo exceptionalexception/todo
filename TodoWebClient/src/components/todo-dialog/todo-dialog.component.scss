@@ -1,5 +1,5 @@
-.grid1 {
-    display: grid;
-    grid-template-columns: repeat(3, 33.33%);
-    margin: 20px 10px;
-}
+    .todoDialogContent {
+      display: grid;
+      gap: 1rem;
+      margin: 20px;
+   }
