@@ -25,7 +25,7 @@ export class TodosComponent {
 
   openTodoDialog(todoId?: number): void {
     let dialogRef = this.dialog.open(TodoDialogComponent, {
-      width: '40%',
+      width: '30%',
       data: { todoId: todoId }
     });
 
