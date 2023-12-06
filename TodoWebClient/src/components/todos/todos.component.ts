@@ -10,7 +10,6 @@ import { Todo } from '../../models/todo.model';
   styleUrl: './todos.component.scss'
 })
 export class TodosComponent {
-
   constructor(
     @Inject(MatDialog) public dialog: MatDialog,
     private todoService: TodoService) {}
@@ -26,7 +25,7 @@ export class TodosComponent {
 
   openTodoDialog(todoId?: number): void {
     let dialogRef = this.dialog.open(TodoDialogComponent, {
-      width: '500px',
+      width: '80%',
       data: { todoId: todoId }
     });
 
@@ -34,6 +33,13 @@ export class TodosComponent {
       console.log('The dialog was closed');
       this.todos.push(newTodo);
     });
+  }
+
+  deleteTodo(todo: Todo) {
+    
+  }
+  completeTodo(todo: Todo) {
+    
   }
 }
 

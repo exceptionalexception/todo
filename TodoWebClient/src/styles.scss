@@ -1,7 +1,7 @@
-@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: Poppins, "Helvetica Neue", sans-serif; }
 
 .mb-5 { margin-bottom: 5px; }
 .mb-10 { margin-bottom: 10px; }
@@ -11,4 +11,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mb-30 { margin-bottom: 30px; }
 .mb-35 { margin-bottom: 35px; }
 .mb-40 { margin-bottom: 40px; }
+.min-w-300 { min-width: 300px; }
+.min-h-50 { min-height: 50px; }
+.fr { float: right;}
+.fl { float: left;}
+.bold { font-weight: bold; }
+.v-top { vertical-align: top; }
+
 

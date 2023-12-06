@@ -1,17 +1,16 @@
-<div class="container">
-    <div class="row">
-        <div class="col-10">
-            <mat-form-field>
-                <mat-label>Todo</mat-label>
-                <input matInput [value]="todo.todoText">
-            </mat-form-field>
-        </div>
-        <div class="col-2">
-            <mat-form-field>
-                <input matInput [matDatepicker]="picker" placeholder="Choose a date">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-        </div>
-    </div>
+<h1 mat-dialog-title>{{todoDialogTitle}}</h1>
+<div matt-dialog-content>
+    <mat-form-field>
+        <mat-label>Todo</mat-label>
+        <input matInput [value]="todo.todoText">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button color="accent">Save</button>
+    <button mat-raised-button>Cancel</button>
 </div>

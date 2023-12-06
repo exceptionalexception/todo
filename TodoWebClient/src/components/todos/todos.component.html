@@ -1,35 +1,69 @@
-<div class="container">
-    <div class="row mb-40">
-        <button mat-raised-button color="accent" (click)="openTodoDialog()">
-            <mat-icon>add</mat-icon>
-            Add Todo
-        </button>
+<div id="todosContainer">
+    <div class="todos-header">
+        <div class="col-2">
+            <h1 class="bold">Todos</h1>
+        </div>
+        <div class="col-4">
+            <button mat-raised-button color="accent" (click)="openTodoDialog()">
+                <mat-icon>add</mat-icon>
+                Add Todo
+            </button>
+        </div>
     </div>
-    <div class="row">
-        <h1>Todos</h1>
-        <mat-table #table [dataSource]="todos">
-            <ng-container matColumnDef="todo">
-              <mat-header-cell *matHeaderCellDef>Todo</mat-header-cell>
-              <mat-cell *matCellDef="let todo"> {{todo.todoText}} </mat-cell>
-            </ng-container>
-        
-            <ng-container matColumnDef="dueDate">
-              <mat-header-cell *matHeaderCellDef>Due Date</mat-header-cell>
-              <mat-cell *matCellDef="let todo"> {{todo.dueDate | date:'dd/MM/yyyy hh:mm'}} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="createdDate">
-                <mat-header-cell *matHeaderCellDef>Created Date</mat-header-cell>
-                <mat-cell *matCellDef="let todo"> {{todo.createdDate | date:'dd/MM/yyyy hh:mm'}} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="isComplete">
-                <mat-header-cell *matHeaderCellDef>Completed</mat-header-cell>
-                <mat-cell *matCellDef="let todo"> {{(todo.isComplete ? '✅' : '❌')}} </mat-cell>
-            </ng-container>
-
-            <mat-header-row *matHeaderRowDef="todoColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: todoColumns;"></mat-row>
-          </mat-table>
+    <div class="todo-card-grids">
+        @for (todo of todos; track todo.todoUId) {
+            <mat-card class="mb-20">
+                <mat-card-content>
+                    <textarea [value]="todo.todoText" class="mb-20"></textarea>
+                    <mat-form-field class="v-top">
+                        <mat-label>Due Date</mat-label>
+                        <input matInput [matDatepicker]="picker" placeholder="Due date">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    <span class="fr">
+                        <div *ngIf="todo.isComplete"> 
+                            <div title="Completed"><mat-icon color="primary">check_circle</mat-icon></div> 
+                        </div>
+                    </span>
+                    <div *ngIf="todo.subTodos.length">
+                        <mat-divider></mat-divider>
+                    </div>
+                    <div class="sub-todo-grids">
+                        @for (subTodo of todo.subTodos; track subTodo.todoUId) {
+                            <mat-card class="mb-5" style="background-color: #efefef;">
+                                <mat-card-content>
+                                    <textarea [value]="subTodo.todoText"></textarea>
+                                    <mat-form-field class="v-top">
+                                        <mat-label>Due Date</mat-label>
+                                        <input matInput [matDatepicker]="picker" placeholder="Due date">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                    <span class="fr">
+                                        <div *ngIf="todo.isComplete"> 
+                                            <div title="Completed"><mat-icon color="primary">check_circle</mat-icon></div> 
+                                        </div>
+                                    </span>
+                                </mat-card-content>
+                                <mat-card-actions>
+                                    <button mat-button><mat-icon>delete</mat-icon>Delete</button>
+                                    <div *ngIf="!todo.isComplete"> 
+                                        <button mat-button><mat-icon>done</mat-icon>Complete</button>
+                                    </div>
+                                </mat-card-actions>
+                            </mat-card>
+                        }
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button><mat-icon>add</mat-icon>Add Sub Todo</button>
+                    <button mat-button class="fr"><mat-icon>delete</mat-icon>Delete</button>
+                    <div *ngIf="!todo.isComplete">
+                        <button mat-button><mat-icon>done</mat-icon>Complete</button>
+                    </div>
+                </mat-card-actions>
+            </mat-card>
+        }
     </div>
 </div>

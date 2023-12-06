@@ -11,6 +11,6 @@
         public Guid? ParentTodoUId { get; set; }
         public Todo? ParentTodo { get; set; }
 
-        public IEnumerable<Todo> SubTodos { get; set; } = new List<Todo>();
+        public List<Todo> SubTodos { get; set; } = new List<Todo>();
     }
 }

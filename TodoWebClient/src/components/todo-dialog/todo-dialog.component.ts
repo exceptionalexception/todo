@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Todo } from '../../models/todo.model';
 
@@ -9,6 +9,8 @@ import { Todo } from '../../models/todo.model';
 })
 export class TodoDialogComponent{
   todo: Todo = new Todo('', new Date());
+  todoDialogTitle: string = !this.todo?.todoUId ? 'Add Todo' : 'Edit Todo';
+
 
   constructor(
     public dialogRef: MatDialogRef<TodoDialogComponent>,

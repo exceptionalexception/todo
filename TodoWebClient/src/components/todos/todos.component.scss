@@ -1,0 +1,35 @@
+#todosContainer {
+  textarea {
+    width: 60%;
+    min-height: 70px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    font-family: Poppins, "Helvetica Neue", sans-serif;
+    outline: none;
+    margin-right: 15px;
+  }
+
+  .todos-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .todo-card-grids {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(550px, 1fr));
+    gap: 1.5rem;
+
+    .sub-todo-grids {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 1rem;
+    }
+    .mat-mdc-form-field {
+      width: 155px;;
+    }
+  }
+}
+
