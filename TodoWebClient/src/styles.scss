@@ -17,5 +17,9 @@ body { margin: 0; font-family: Poppins, "Helvetica Neue", sans-serif; }
 .fl { float: left;}
 .bold { font-weight: bold; }
 .v-top { vertical-align: top; }
+.flex { 
+    display: flex; 
+    justify-content: space-between;
+}
 
 

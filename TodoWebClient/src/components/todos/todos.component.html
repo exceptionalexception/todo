@@ -4,7 +4,7 @@
             <h1 class="bold">Todos</h1>
         </div>
         <div class="col-4">
-            <button mat-raised-button color="accent" (click)="openTodoDialog()">
+            <button mat-raised-button color="primary" (click)="openTodoDialog()">
                 <mat-icon>add</mat-icon>
                 Add Todo
             </button>
@@ -12,7 +12,7 @@
     </div>
     <div class="todo-card-grids">
         @for (todo of todos; track todo.todoUId) {
-            <mat-card class="mb-20">
+            <mat-card class="mb-20" style="background-color: #FFFeFe;">
                 <mat-card-content>
                     <textarea [value]="todo.todoText" class="mb-20"></textarea>
                     <mat-form-field class="v-top">
@@ -31,7 +31,7 @@
                     </div>
                     <div class="sub-todo-grids">
                         @for (subTodo of todo.subTodos; track subTodo.todoUId) {
-                            <mat-card class="mb-5" style="background-color: #efefef;">
+                            <mat-card class="mb-5">
                                 <mat-card-content>
                                     <textarea [value]="subTodo.todoText"></textarea>
                                     <mat-form-field class="v-top">
@@ -41,27 +41,27 @@
                                         <mat-datepicker #picker></mat-datepicker>
                                     </mat-form-field>
                                     <span class="fr">
-                                        <div *ngIf="todo.isComplete"> 
+                                        <div *ngIf="subTodo.isComplete"> 
                                             <div title="Completed"><mat-icon color="primary">check_circle</mat-icon></div> 
                                         </div>
                                     </span>
                                 </mat-card-content>
-                                <mat-card-actions>
-                                    <button mat-button><mat-icon>delete</mat-icon>Delete</button>
-                                    <div *ngIf="!todo.isComplete"> 
-                                        <button mat-button><mat-icon>done</mat-icon>Complete</button>
+                                <mat-card-actions class="flex">
+                                    <div *ngIf="!subTodo.isComplete"> 
+                                        <button mat-raised-button><mat-icon>done</mat-icon>Complete</button>
                                     </div>
+                                    <button mat-raised-button><mat-icon>delete</mat-icon>Delete</button>
                                 </mat-card-actions>
                             </mat-card>
                         }
                     </div>
                 </mat-card-content>
-                <mat-card-actions>
-                    <button mat-button><mat-icon>add</mat-icon>Add Sub Todo</button>
-                    <button mat-button class="fr"><mat-icon>delete</mat-icon>Delete</button>
+                <mat-card-actions class="flex">
+                    <button mat-raised-button><mat-icon>add</mat-icon>Add Sub Todo</button>
                     <div *ngIf="!todo.isComplete">
-                        <button mat-button><mat-icon>done</mat-icon>Complete</button>
+                        <button mat-raised-button><mat-icon>done</mat-icon>Complete</button>
                     </div>
+                    <button mat-raised-button><mat-icon>delete</mat-icon>Delete</button>
                 </mat-card-actions>
             </mat-card>
         }

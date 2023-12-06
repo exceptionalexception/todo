@@ -17,7 +17,7 @@ namespace DataAccessMemory
                 DueDate = DateTime.Now.AddDays(-2), 
                 CreatedDate = DateTime.Now.AddDays(-5) 
             };
-            var todo1a = new Todo { TodoUId = Guid.NewGuid(), TodoText = "Go to Lowes and buy GFCI outlet.", DueDate = DateTime.Now.AddDays(-2), CreatedDate = DateTime.Now.AddDays(-5), ParentTodoUId = todo1.TodoUId };
+            var todo1a = new Todo { TodoUId = Guid.NewGuid(), TodoText = "Go to Lowes and buy GFCI outlet.", DueDate = DateTime.Now.AddDays(-2), CreatedDate = DateTime.Now.AddDays(-5), ParentTodoUId = todo1.TodoUId, IsComplete = true };
             var todo1b = new Todo { TodoUId = Guid.NewGuid(), TodoText = "Find your tools.", DueDate = DateTime.Now.AddDays(-2), CreatedDate = DateTime.Now.AddDays(-5), ParentTodoUId = todo1.TodoUId };
             var todo1c = new Todo { TodoUId = Guid.NewGuid(), TodoText = "Replace the outlets.", DueDate = DateTime.Now.AddDays(-2), CreatedDate = DateTime.Now.AddDays(-5), ParentTodoUId = todo1.TodoUId };
             todo1.SubTodos = new List<Todo> { todo1a, todo1b, todo1c };
