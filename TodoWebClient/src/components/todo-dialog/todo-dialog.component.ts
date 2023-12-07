@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Todo } from '../../models/todo.model';
-import { TodoService } from '../../services/todo.service';
+import { TodoHttpService } from '../../services/todo-http.service';
 import { DateValidationService } from '../../services/date-validation.service';
 import { catchError, of } from 'rxjs';
 
@@ -16,7 +16,7 @@ export class TodoDialogComponent{
   errorMessage: string = '';
 
   constructor(
-    private todoService: TodoService,
+    private todoService: TodoHttpService,
     private dateValidationService: DateValidationService,
     public dialogRef: MatDialogRef<TodoDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public parentTodoId: string | null) 

@@ -7,9 +7,7 @@
         public DateTime DueDate { get; set; }
         public DateTime CreatedDate { get; set; }
         public bool IsComplete { get; set; }
-        
         public Guid? ParentTodoUId { get; set; }
-        public Todo? ParentTodo { get; set; }
 
         public List<Todo> SubTodos { get; set; } = new List<Todo>();
     }

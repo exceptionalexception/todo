@@ -34,29 +34,8 @@ namespace Business
             var todoToAdd = todo.ToModel();
             todoToAdd.CreatedDate = DateTime.Now;
             todoToAdd.IsComplete = false;
+            todoToAdd.TodoUId = Guid.NewGuid();
             var todoDb = await _todoRepo.AddTodo(todoToAdd);
-            return todoDb.ToDto();
-        }
-
-        public async Task<TodoDto> AddSubTodo(Guid parentTodoUId, TodoDto subTodo)
-        {
-            var parentTodo = await _todoRepo.GetTodo(parentTodoUId);
-            if (parentTodo == null)
-            {
-                throw new Exception("Parent TODO not found");
-            }
-
-            if (parentTodo.SubTodos.Count >= 2)
-            {
-                throw new Exception("Maximum depth of 2 reached");
-            }
-
-            var subTodoToAdd = subTodo.ToModel();
-            subTodoToAdd.CreatedDate = DateTime.Now;
-            subTodoToAdd.IsComplete = false;
-            parentTodo.SubTodos.Add(subTodoToAdd);
-
-            var todoDb = await _todoRepo.UpdateTodo(parentTodo);
             return todoDb.ToDto();
         }
 
@@ -66,8 +45,19 @@ namespace Business
             todo.IsComplete = true;
             await _todoRepo.UpdateTodo(todo);
 
+            // this is a parent todo
+            if (todo.SubTodos.Count > 0)
+            {
+                todo.SubTodos.ForEach(async _ => {
+                    _.IsComplete = true;
+                    await _todoRepo.UpdateTodo(_);
+                });
+            }
+
+            // check if this is a subtodo
             if (todo.ParentTodoUId != null)
             {
+                // check sibling subtodos to see if they are all complete
                 var parentTodo = await _todoRepo.GetTodo(todo.ParentTodoUId.GetValueOrDefault());
                 var allSubTodosComplete = parentTodo.SubTodos.All(_ => _.IsComplete);
 

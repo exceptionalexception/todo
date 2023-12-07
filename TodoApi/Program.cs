@@ -1,6 +1,8 @@
 using Business;
-using DataAccessMemory;
+using DataAccess;
 using DataAccessDb;
+using DataAccessMemory;
+using Databaser;
 using Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,16 +24,10 @@ if (useMemory)
 }
 else
 {
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    if (!string.IsNullOrEmpty(connectionString))
-    {
-        //builder.Services.AddDbContext<TodoDbContext>(connectionString);
+        DbSetup.SetupDb(builder.Configuration);
+ 
+        builder.Services.AddScoped(_ => new TodoDb(builder.Configuration));
         builder.Services.AddTransient<ITodoRepo, TodoDbRepo>();
-    }
-    else
-    {
-        throw new Exception($"No connection string was found in appsettings.{builder.Environment.EnvironmentName}.json file.");
-    }
 }
 
 builder.Services.AddControllers();
@@ -54,3 +50,11 @@ app.UseCors(builder => builder
     .AllowAnyHeader());
 
 app.Run();
+
+#region Methods
+
+
+
+
+
+#endregion

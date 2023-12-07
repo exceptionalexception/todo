@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <InvariantGlobalization>true</InvariantGlobalization>
+    <InvariantGlobalization>false</InvariantGlobalization>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DataAccessMemory\DataAccessMemory.csproj" />
     <ProjectReference Include="..\DataAccessDb\DataAccessDb.csproj" />
+    <ProjectReference Include="..\Databaser\Databaser.csproj" />
     <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
     <ProjectReference Include="..\Business\Business.csproj" />
   </ItemGroup>

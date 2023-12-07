@@ -2,10 +2,16 @@
     <div class="todos-header">
         <h1 class="bold">Todos</h1>
     </div>
-    <button mat-raised-button color="primary" (click)="openTodoDialog(null)">
-        <mat-icon>add</mat-icon>
-        Add Todo
-    </button>
+    <div class="mb-20">
+        <button mat-raised-button color="primary" (click)="openTodoDialog(null)">
+            <mat-icon>add</mat-icon>
+            Add Todo
+        </button>
+        <a class="fr" routerLink="/todos-list">
+            <mat-icon color="primary">view_list</mat-icon>
+            <span class="v-super">List View</span>
+        </a>
+    </div>
     <div class="todo-card-grids">
         @for (todo of todos; track todo.todoUId) {
             <mat-card class="todo-card">
@@ -49,7 +55,8 @@
                                             [value]="todo.dueDate" 
                                             placeholder="Due date"
                                             (focus)="picker.open()"
-                                            readonly>
+                                            readonly
+                                            [ngClass]="{'red-font': isPastDue(todo)}">
 
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>

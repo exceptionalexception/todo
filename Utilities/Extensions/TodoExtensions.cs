@@ -22,7 +22,6 @@ namespace Utilities.Extensions
                 CreatedDate = todo.CreatedDate,
                 DueDate = todo.DueDate,
                 ParentTodoUId = todo.ParentTodoUId,
-                ParentTodo = todo.ParentTodo.ToDto(),
                 SubTodos = todo.SubTodos.ToDtos()
             };
         }
@@ -43,7 +42,6 @@ namespace Utilities.Extensions
                 TodoText = todo.TodoText,
                 DueDate = todo.DueDate,
                 ParentTodoUId = todo.ParentTodoUId,
-                ParentTodo = todo.ParentTodo?.ToModel(),
                 SubTodos = todo.SubTodos.ToModels()
             };
         }

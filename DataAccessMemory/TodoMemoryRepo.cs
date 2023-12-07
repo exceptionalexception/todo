@@ -7,6 +7,7 @@ namespace DataAccessMemory
     public class TodoMemoryRepo : ITodoRepo
     {
         private readonly ILogger<TodoMemoryRepo> _logger;
+        
         public TodoMemoryRepo(ILogger<TodoMemoryRepo> logger)
         {
             _logger = logger;
@@ -41,6 +42,7 @@ namespace DataAccessMemory
         public async Task<Todo> AddTodo(Todo todo)
         {
             todo.TodoUId = Guid.NewGuid();
+            todo.CreatedDate = todo.CreatedDate;
             AllTodos.Add(todo);
             return todo;
         }
@@ -60,7 +62,6 @@ namespace DataAccessMemory
                 todoToUpdate.TodoText = todo.TodoText;
                 todoToUpdate.DueDate = todo.DueDate;
                 todoToUpdate.ParentTodoUId = todo.ParentTodoUId;
-                todoToUpdate.ParentTodo = todo.ParentTodo;
                 todoToUpdate.SubTodos = todo.SubTodos;
                 return todoToUpdate;
 

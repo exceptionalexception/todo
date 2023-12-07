@@ -1,43 +1,208 @@
-﻿using Interfaces;
+﻿using Dapper;
+using DataAccess;
+using Interfaces;
+using Microsoft.Extensions.Logging;
 using Models;
+using System.Data;
+
 
 namespace DataAccessDb
 {
     public class TodoDbRepo : ITodoRepo
     {
-        public Task<Todo> AddTodo(Todo todo)
+        private readonly TodoDb _todoDb;
+        private readonly ILogger<TodoDbRepo> _logger;
+
+        public TodoDbRepo(TodoDb db, ILogger<TodoDbRepo> logger)
         {
-            throw new NotImplementedException();
+            _logger = logger;
+            _todoDb = db;
         }
 
-        public Task CompleteTodo(Guid todoUId)
+        public async Task<IEnumerable<Todo>> GetTodos()
         {
-            throw new NotImplementedException();
+            try
+            {
+                using IDbConnection conn = _todoDb.Connection;
+                var query = 
+                    @$"SELECT 
+                        {nameof(Todo.TodoUId)}, 
+                        {nameof(Todo.TodoText)}, 
+                        {nameof(Todo.DueDate)},
+                        {nameof(Todo.CreatedDate)},
+                        {nameof(Todo.IsComplete)},
+                        {nameof(Todo.ParentTodoUId)}
+                    FROM Todos;
+
+                    SELECT 
+                        {nameof(Todo.TodoUId)}, 
+                        {nameof(Todo.TodoText)}, 
+                        {nameof(Todo.DueDate)},
+                        {nameof(Todo.CreatedDate)},
+                        {nameof(Todo.IsComplete)},
+                        {nameof(Todo.ParentTodoUId)}
+                    FROM Todos 
+                    WHERE {nameof(Todo.ParentTodoUId)} IS NOT NULL;";
+
+                conn.Open();
+                using var multi = await conn.QueryMultipleAsync(query);
+
+                var allTodos = multi.Read<Todo>().ToList() ?? [];
+                
+                var allSubTodos = multi.Read<Todo>().ToList() ?? [];
+                foreach (var todo in allTodos)
+                {
+                    todo.SubTodos = allSubTodos
+                        .Where(st => st.ParentTodoUId == todo.TodoUId)
+                        .ToList();
+                }
+                return allTodos.Where(t => t.ParentTodoUId == null).ToList();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error occured getting todos.");
+                throw;
+            }
         }
 
-        public Task DeleteTodo(Todo todo)
+        public async Task<Todo> AddTodo(Todo todo)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using IDbConnection conn = _todoDb.Connection;
+                var query =
+                    @$"INSERT INTO Todos (
+                {nameof(Todo.TodoUId)}, 
+                {nameof(Todo.TodoText)}, 
+                {nameof(Todo.DueDate)},
+                {nameof(Todo.CreatedDate)},
+                {nameof(Todo.IsComplete)},
+                {nameof(Todo.ParentTodoUId)}
+            ) 
+            VALUES (
+                @{nameof(Todo.TodoUId)}, 
+                @{nameof(Todo.TodoText)}, 
+                @{nameof(Todo.DueDate)},
+                @{nameof(Todo.CreatedDate)},
+                @{nameof(Todo.IsComplete)},
+                @{nameof(Todo.ParentTodoUId)}
+            );
+            
+            SELECT 
+                {nameof(Todo.TodoUId)}, 
+                {nameof(Todo.TodoText)}, 
+                {nameof(Todo.DueDate)},
+                {nameof(Todo.CreatedDate)},
+                {nameof(Todo.IsComplete)},
+                {nameof(Todo.ParentTodoUId)}
+            FROM Todos
+            WHERE {nameof(Todo.TodoUId)} = @{nameof(Todo.TodoUId)};";
+                conn.Open();
+                var result = await conn.QuerySingleAsync<Todo>(query, todo);
+                return result;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error occured adding a todo.");
+                throw;
+            }
         }
 
-        public Task<Todo> GetSubTodo(Guid todoUId)
+        public async Task DeleteTodo(Todo todo)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using IDbConnection conn = _todoDb.Connection;
+                var query = 
+                    @$"DELETE FROM Todos
+                    WHERE {nameof(Todo.TodoUId)} = @{nameof(Todo.TodoUId)}";
+
+                conn.Open();
+                await conn.ExecuteAsync(query, new { todo.TodoUId });
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error occured deleting a todo.");
+                throw;
+            }
         }
 
-        public Task<Todo> GetTodo(Guid todoUId)
+
+        public async Task<Todo> GetTodo(Guid todoUId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using IDbConnection conn = _todoDb.Connection;
+                var query =
+                    @$"SELECT 
+                        {nameof(Todo.TodoUId)}, 
+                        {nameof(Todo.TodoText)}, 
+                        {nameof(Todo.DueDate)},
+                        {nameof(Todo.CreatedDate)},
+                        {nameof(Todo.IsComplete)},
+                        {nameof(Todo.ParentTodoUId)}
+                    FROM Todos
+                    WHERE {nameof(Todo.TodoUId)} = @{nameof(Todo.TodoUId)};
+            
+                    SELECT 
+                        {nameof(Todo.TodoUId)}, 
+                        {nameof(Todo.TodoText)}, 
+                        {nameof(Todo.DueDate)},
+                        {nameof(Todo.CreatedDate)},
+                        {nameof(Todo.IsComplete)},
+                        {nameof(Todo.ParentTodoUId)}
+                    FROM Todos
+                    WHERE {nameof(Todo.ParentTodoUId)} = @{nameof(Todo.TodoUId)}";
+
+                conn.Open();
+                using var multi = await conn.QueryMultipleAsync(query, new { todoUId });
+                var todo = await multi.ReadFirstOrDefaultAsync<Todo>();
+                if (todo != null)
+                {
+                    todo.SubTodos = (await multi.ReadAsync<Todo>()).ToList();
+                }
+                return todo;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error occured getting a todo.");
+                throw;
+            }
         }
 
-        public Task<IEnumerable<Todo>> GetTodos()
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task<Todo> UpdateTodo(Todo todo)
+        public async Task<Todo> UpdateTodo(Todo todo)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using IDbConnection conn = _todoDb.Connection;
+                var query = $@"
+                    UPDATE Todos SET 
+                        {nameof(Todo.TodoText)} = @{nameof(Todo.TodoText)}, 
+                        {nameof(Todo.DueDate)} = @{nameof(Todo.DueDate)}, 
+                        {nameof(Todo.IsComplete)} = @{nameof(Todo.IsComplete)}, 
+                        {nameof(Todo.ParentTodoUId)} = @{nameof(Todo.ParentTodoUId)} 
+                    WHERE {nameof(Todo.TodoUId)} = @{nameof(Todo.TodoUId)};
+                       
+                    SELECT 
+                        {nameof(Todo.TodoUId)},
+                        {nameof(Todo.TodoText)},
+                        {nameof(Todo.DueDate)},
+                        {nameof(Todo.CreatedDate)},
+                        {nameof(Todo.IsComplete)},
+                        {nameof(Todo.ParentTodoUId)} 
+                    FROM Todos 
+                    WHERE {nameof(Todo.TodoUId)} = @{nameof(Todo.TodoUId)};";
+
+                conn.Open();
+                var result = await conn.QuerySingleAsync<Todo>(query, todo);
+                return result;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "Error occured updating a todo.");
+                throw;
+            }
         }
     }
 }

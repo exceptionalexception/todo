@@ -7,13 +7,15 @@ import { SharedModule } from '../shared/shared.module';
 import { TodosComponent } from '../components/todos/todos.component';
 import { TodoDialogComponent } from '../components/todo-dialog/todo-dialog.component';
 import { HttpClientModule, provideHttpClient, withFetch } from '@angular/common/http';
+import { TodosListComponent } from '../components/todos-list/todos-list.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     TodoDialogComponent,
-    TodosComponent
+    TodosComponent,
+    TodosListComponent
   ],
   imports: [
     BrowserModule,

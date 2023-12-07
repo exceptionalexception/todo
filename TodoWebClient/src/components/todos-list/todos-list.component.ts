@@ -7,14 +7,13 @@ import { Todo } from '../../models/todo.model';
 import { Subject, catchError, debounceTime, of } from 'rxjs';
 
 @Component({
-  selector: 'todos',
-  templateUrl: './todos.component.html',
-  styleUrl: './todos.component.scss'
+  selector: 'todos-list',
+  templateUrl: './todos-list.component.html',
+  styleUrl: './todos-list.component.scss'
 })
-export class TodosComponent {
+export class TodosListComponent {
   updateDueDate$ = new Subject<{ newValue: Date, todo: any }>();
   updateTodoText$ = new Subject<{ newValue: string, todo: any }>();
-
 
   constructor(
     @Inject(MatDialog) public dialog: MatDialog,

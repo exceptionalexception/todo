@@ -8,7 +8,7 @@ import { AppConstants } from '../constants/app-constants';
 @Injectable({
   providedIn: 'root'
 })
-export class TodoService {
+export class TodoHttpService {
   constructor(private httpClient: HttpClient) { }
 
   getTodos(): Observable<Todo[]> {
