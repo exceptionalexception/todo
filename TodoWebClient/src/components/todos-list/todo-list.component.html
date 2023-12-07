@@ -1,16 +1,16 @@
 <div id="todosListContainer">
     <div class="todos-header">
         <h1 class="bold">Todos</h1>
+        <a routerLink="/todo-tiles">
+            <mat-icon color="primary">view_list</mat-icon>
+            <span class="v-super">Tiles View</span>
+        </a>
     </div>
     <div class="mb-20">
         <button mat-raised-button color="primary" (click)="openTodoDialog(null)">
             <mat-icon>add</mat-icon>
             Add Todo
         </button>
-        <a class="fr" routerLink="/todos">
-            <mat-icon color="primary">view_module</mat-icon>
-            <span class="v-super">Tile View</span>
-        </a>
     </div>
     <mat-accordion class="todo-list">
         @for (todo of todos; track todo.todoUId) {
@@ -21,22 +21,12 @@
                         <mat-label>{{todo.todoText}}</mat-label>
                     </mat-panel-title>
                     <mat-panel-description class="flex">
-                        <mat-label [ngClass]="{'red-font': isPastDue(todo)}">
-                            Due Date: {{todo.dueDate | date: "MM/dd/yyyy" }}
+                        <mat-label class="mr-10" [ngClass]="{'red-font': isPastDue(todo)}">
+                            <strong>Due:</strong>{{todo.dueDate | date: "MM/dd/yyyy" }}
                         </mat-label>
-                        <mat-label [ngClass]="{'red-font': isPastDue(todo)}">
-                            Created Date: {{todo.createdDate | date: "MM/dd/yyyy" }}
-                        </mat-label>
-                        <div class="todo-accordion-title-actions" align="end">
-                            <div *ngIf="!todo.isComplete">
-                                <button mat-button (click)="completeTodo(todo)" title="Complete">
-                                    <mat-icon>delete</mat-icon>Complete
-                                </button>
-                            </div>
-                            <button mat-button (click)="deleteTodo(todo)" title="Delete">
+                             <button mat-button class="mr-10" (click)="deleteTodo(todo)" title="Delete">
                                 <mat-icon>delete</mat-icon>Delete
                             </button>
-                        </div>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 

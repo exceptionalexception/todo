@@ -7,11 +7,11 @@ import { Todo } from '../../models/todo.model';
 import { Subject, catchError, debounceTime, of } from 'rxjs';
 
 @Component({
-  selector: 'todos',
-  templateUrl: './todos.component.html',
-  styleUrl: './todos.component.scss'
+  selector: 'todo-tiles',
+  templateUrl: './todo-tiles.component.html',
+  styleUrl: './todo-tiles.component.scss'
 })
-export class TodosComponent {
+export class TodoTilesComponent {
   updateDueDate$ = new Subject<{ newValue: Date, todo: any }>();
   updateTodoText$ = new Subject<{ newValue: string, todo: any }>();
 
@@ -38,8 +38,6 @@ export class TodosComponent {
         });
     }
 
-    
-  todoColumns = ['todo', 'dueDate', 'createdDate', 'isComplete'];
   todos: Todo[] = [];
   today = new Date();
 

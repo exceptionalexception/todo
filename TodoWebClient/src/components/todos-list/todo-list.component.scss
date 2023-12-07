@@ -1,7 +1,4 @@
 #todosListContainer {
-    width: 80%;
-    margin:auto;
-    font-size: large;
     textarea {
         width: 50%;
         max-width: 60%;
@@ -23,14 +20,19 @@
     }
 
     mat-expansion-panel {
-        background-color: #f8fbfd;
+        background-color: #ececff;
         margin-bottom: 10px;
     }
 
-    .todo-accordion-title-actions {
+    .flex {
         display: flex;
         justify-content: space-between;
-        align-items: center;
+
+        div {
+            min-width: 300px;
+            display: flex;
+            justify-content: space-between;
+        }
     }
 
     .parent-todo-container{
@@ -52,11 +54,6 @@
         padding: 0 24px 16px;
         background-color: #efefef;
         padding: 30px;
-    }
-
-    .flex {
-        display: flex;
-        justify-content: space-between;
     }
 }
 

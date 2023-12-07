@@ -95,6 +95,7 @@ namespace DataAccessMemory
             var todo7 = new Todo { TodoUId = Guid.NewGuid(), TodoText = "Eat.", DueDate = DateTime.Now.AddHours(-20), CreatedDate = DateTime.Now };
             var todo8 = new Todo { TodoUId = Guid.NewGuid(), TodoText = "Eat.", DueDate = DateTime.Now.AddHours(-50), CreatedDate = DateTime.Now };
 
-            AllTodos = new List<Todo> { todo1, todo2, todo3, todo4, todo5, todo6, todo7, todo8, todo1a, todo1b, todo1c };   }
+            AllTodos = new List<Todo> { todo1, todo2, todo3, todo4, todo5, todo6, todo7, todo8, todo1a, todo1b, todo1c };   
+        }
     }
 }

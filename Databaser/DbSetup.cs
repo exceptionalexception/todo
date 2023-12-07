@@ -93,12 +93,33 @@ namespace Databaser
 
                 dBconnection.Execute(script);
                 Console.WriteLine("Todo table created successfully.");
+                Seed();
             }
             catch (Exception e)
             {
                 Console.WriteLine($"An unexpected error occured while creating the todo schema.{e}");
                 throw;
             }
+        }
+
+        private static void Seed()
+        {
+            using SqlConnection dBconnection = new(_dbConnectionString);
+            dBconnection.Open();
+
+            var filePath = Path.Combine(
+                Directory.GetParent(Directory.GetCurrentDirectory())!.FullName,
+                "DatabaseScripts", "Todo_seed.sql"
+            );
+            var script = string.Empty;
+            if (File.Exists(filePath))
+            {
+                script = File.ReadAllText(filePath);
+            }
+            else throw new Exception($"{filePath} file not found.");
+
+            dBconnection.Execute(script);
+            Console.WriteLine("Todo table seeded successfully.");
         }
 
         private static bool IsDbReady()

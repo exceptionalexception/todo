@@ -1,16 +1,16 @@
 <div id="todosContainer">
     <div class="todos-header">
         <h1 class="bold">Todos</h1>
+        <a routerLink="/todo-list">
+            <mat-icon color="primary">view_module</mat-icon>
+            <span class="v-super">List View</span>
+        </a>
     </div>
     <div class="mb-20">
         <button mat-raised-button color="primary" (click)="openTodoDialog(null)">
             <mat-icon>add</mat-icon>
             Add Todo
         </button>
-        <a class="fr" routerLink="/todos-list">
-            <mat-icon color="primary">view_list</mat-icon>
-            <span class="v-super">List View</span>
-        </a>
     </div>
     <div class="todo-card-grids">
         @for (todo of todos; track todo.todoUId) {

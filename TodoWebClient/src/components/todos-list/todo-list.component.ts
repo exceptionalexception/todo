@@ -7,11 +7,11 @@ import { Todo } from '../../models/todo.model';
 import { Subject, catchError, debounceTime, of } from 'rxjs';
 
 @Component({
-  selector: 'todos-list',
-  templateUrl: './todos-list.component.html',
-  styleUrl: './todos-list.component.scss'
+  selector: 'todo-list',
+  templateUrl: './todo-list.component.html',
+  styleUrl: './todo-list.component.scss'
 })
-export class TodosListComponent {
+export class TodoListComponent {
   updateDueDate$ = new Subject<{ newValue: Date, todo: any }>();
   updateTodoText$ = new Subject<{ newValue: string, todo: any }>();
 

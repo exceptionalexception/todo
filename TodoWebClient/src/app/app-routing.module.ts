@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TodosComponent } from '../components/todos/todos.component';
-import { TodosListComponent } from '../components/todos-list/todos-list.component';
+import { TodoTilesComponent as TodoTilesComponent } from '../components/todo-tiles/todo-tiles.component';
+import { TodoListComponent } from '../components/todos-list/todo-list.component';
 
 const routes: Routes = [
-  { path: 'todos', component: TodosComponent },
-  { path: 'todos-list', component: TodosListComponent },
-  { path: '', redirectTo: '/todos', pathMatch: 'full' },
-  { path: '**', redirectTo: '/todos' }
+  { path: 'todo-list', component: TodoListComponent },
+  { path: 'todo-tiles', component: TodoTilesComponent },
+  { path: '', redirectTo: '/todo-list', pathMatch: 'full' },
+  { path: '**', redirectTo: '/todo-list' }
 ];
 
 @NgModule({
