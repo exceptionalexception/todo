@@ -2,16 +2,21 @@
 <div matt-dialog-content class="todoDialogContent">
     <mat-form-field>
         <mat-label>Description</mat-label>
-        <input matInput [value]="todo.todoText">
+        <input matInput [(ngModel)]="todo.todoText">
     </mat-form-field>
     <mat-form-field>
         <mat-label>Due Date</mat-label>
-        <input matInput [matDatepicker]="picker">
+        <input matInput 
+            [matDatepicker]="picker" 
+            (focus)="picker.open()" 
+            [(ngModel)]="todo.dueDate"
+            readonly>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
+    <mat-label class="red">{{errorMessage}}</mat-label>
 </div>
-<div mat-dialog-actions>
-    <button mat-raised-button color="accent">Save</button>
-    <button mat-raised-button>Cancel</button>
+<div mat-dialog-actions align="end">
+    <button mat-raised-button (click)="addTodo()" color="accent">Save</button>
+    <button mat-raised-button (click)="onCloseClick()">Cancel</button>
 </div>

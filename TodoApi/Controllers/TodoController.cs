@@ -53,6 +53,7 @@ namespace Api.Controllers
         }
 
         [HttpPost]
+        [Route("add")]
         [ProducesResponseType(typeof(TodoDto), 200)]
         public async Task<IActionResult> AddTodo([FromBody] TodoDto todo)
         {
@@ -68,25 +69,8 @@ namespace Api.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("{parentTodoId}/subtodo")]
-        [ProducesResponseType(typeof(TodoDto), 200)]
-        public async Task<IActionResult> AddSubTodo(Guid parentTodoId, [FromBody] TodoDto subTodo)
-        {
-            try
-            {
-                var todoAdded = await _todoManager.AddSubTodo(parentTodoId, subTodo);
-                return Ok(todoAdded);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, "Error occured adding sub todo.");
-                throw;
-            }
-        }
-
         [HttpPut]
-        [Route("{todoId}")]
+        [Route("{todoId}/update")]
         [ProducesResponseType(typeof(TodoDto), 200)]
         public async Task<IActionResult> UpdateTodo([FromBody] TodoDto todo)
         {

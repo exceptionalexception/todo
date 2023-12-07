@@ -22,10 +22,21 @@
   .todo-card-grids {
     .todo-card {
       border: 1px solid #ccc;
-      background-color: #fcfcff;
+      background-color: #ececff;
       margin: 20px 20px 20px 0;
-      width: 20%;
+      min-width: 500px;
+      width: 2rem;
       float: left;
+
+      .sub-todo-card {
+        border: 1px solid #ccc;
+        background-color: #fcfcff;
+        margin: 20px 20px 20px 0;
+        min-width: 450px;
+        width: 2rem;
+        float: left;
+      }
+
     }
 
     .todo-card, .sub-todo-card {

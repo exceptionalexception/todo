@@ -18,7 +18,7 @@ var useMemory = useMemoryConfidValue != null && bool.Parse(useMemoryConfidValue)
 // Register repos based on the config.
 if (useMemory)
 {
-    builder.Services.AddTransient<ITodoRepo, TodoMemoryRepo>();
+    builder.Services.AddSingleton<ITodoRepo, TodoMemoryRepo>();
 }
 else
 {
@@ -47,5 +47,10 @@ app.UseSwaggerUI();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors(builder => builder
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
 
 app.Run();

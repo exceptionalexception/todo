@@ -43,7 +43,7 @@ namespace Utilities.Extensions
                 TodoText = todo.TodoText,
                 DueDate = todo.DueDate,
                 ParentTodoUId = todo.ParentTodoUId,
-                ParentTodo = todo.ParentTodo.ToModel(),
+                ParentTodo = todo.ParentTodo?.ToModel(),
                 SubTodos = todo.SubTodos.ToModels()
             };
         }
