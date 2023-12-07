@@ -2,21 +2,24 @@
 
 Todo Client App Setup Instructions
 1- Install NodeJS and npm 20.10.0 (if doesnt exist) 
-	- https://nodejs.org/dist/v20.10.0/node-v20.10.0-x64.msi
-	- verify node & npm installations by checking version in cmd
-		> node -v
-		> npm -v
-	
+- https://nodejs.org/dist/v20.10.0/node-v20.10.0-x64.msi
+- verify node & npm installations by checking version in cmd
+	> node -v
+	> npm -v
+
 2- Install Angular CLI globally (if doesn't exist)
 	- if the execution policy is not previously set then run 👇 
-		Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
-	- npm install -g @angular/cli 
-	- 
+	Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+
+Run these npm commands 
+- npm install -g @angular/cli 
+- run '''npm i'''
+- run '''npm run local'''
 
 	
 Todo API Setup
 1- Install dotnet 8 SDK - https://dotnet.microsoft.com/en-us/download
-2-?
+2- 
 	
 
 
