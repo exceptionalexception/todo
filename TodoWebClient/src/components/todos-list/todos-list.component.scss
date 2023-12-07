@@ -1,0 +1,62 @@
+#todosListContainer {
+    width: 80%;
+    margin:auto;
+    font-size: large;
+    textarea {
+        width: 50%;
+        max-width: 60%;
+        height: 80px;
+        border: 1px solid #ccc;
+        border-radius: 2px;
+        padding: 5px;
+        font-family: Poppins, "Helvetica Neue", sans-serif;
+        outline: none;
+        margin-right: 15px;
+        resize: none;
+    }
+
+    .todos-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+    }
+
+    mat-expansion-panel {
+        background-color: #f8fbfd;
+        margin-bottom: 10px;
+    }
+
+    .todo-accordion-title-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .parent-todo-container{
+        padding: 10px;
+    }
+
+    .sub-todos-container mat-card {
+        padding: 10px;
+        margin: 20px 20px;
+        width: 500px;
+        float: left;
+    }
+
+    .mat-mdc-form-field {
+        width: 155px;
+    }
+
+    .mat-expansion-panel-body {
+        padding: 0 24px 16px;
+        background-color: #efefef;
+        padding: 30px;
+    }
+
+    .flex {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+

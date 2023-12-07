@@ -38,15 +38,13 @@ export class TodosListComponent {
     }
 
     
-  todoColumns = ['todo', 'dueDate', 'createdDate', 'isComplete'];
   todos: Todo[] = [];
-  errorMessage: string = '';
   today = new Date();
 
   ngOnInit() {
     this.getTodos();
   }
-  
+
   getTodos() {
     this.todoService.getTodos().pipe(
       catchError(error => {

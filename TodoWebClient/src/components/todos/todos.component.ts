@@ -41,7 +41,6 @@ export class TodosComponent {
     
   todoColumns = ['todo', 'dueDate', 'createdDate', 'isComplete'];
   todos: Todo[] = [];
-  errorMessage: string = '';
   today = new Date();
 
   ngOnInit() {
