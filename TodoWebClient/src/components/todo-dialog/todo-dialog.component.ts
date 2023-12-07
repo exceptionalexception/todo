@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Todo } from '../../models/todo.model';
 import { TodoService } from '../../services/todo.service';
 import { DateValidationService } from '../../services/date-validation.service';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'todo-dialog',
@@ -33,8 +34,15 @@ export class TodoDialogComponent{
       this.errorMessage = 'Please enter a valid date.';
       return;
     }
-    this.todoService.addTodo(this.todo).subscribe((addedTodo: Todo) => {
-      this.dialogRef.close(addedTodo);
+    this.todoService.addTodo(this.todo).pipe(
+      catchError(error => {
+        this.errorMessage = 'An error occurred while attempting to add the todo.';
+        return of(null);
+      })
+    ).subscribe((addedTodo: Todo | null) => {
+      if (addedTodo) {
+        this.dialogRef.close(addedTodo);
+      }
     });
   }
 

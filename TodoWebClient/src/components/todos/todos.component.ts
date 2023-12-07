@@ -4,7 +4,7 @@ import { TodoDialogComponent } from '../todo-dialog/todo-dialog.component';
 import { TodoService } from '../../services/todo.service';
 import { DateValidationService } from '../../services/date-validation.service';
 import { Todo } from '../../models/todo.model';
-import { Subject, debounceTime } from 'rxjs';
+import { Subject, catchError, debounceTime, of } from 'rxjs';
 
 @Component({
   selector: 'todos',
@@ -49,7 +49,12 @@ export class TodosComponent {
   }
   
   getTodos() {
-    this.todoService.getTodos().subscribe((todos: Todo[]) => {
+    this.todoService.getTodos().pipe(
+      catchError(error => {
+        console.error('An error occurred while attempting to get todos:', error);
+        return of([]);
+      })
+    ).subscribe((todos: Todo[]) => {
       this.todos = todos || [];
     });
   }
