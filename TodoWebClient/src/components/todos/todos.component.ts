@@ -42,6 +42,7 @@ export class TodosComponent {
   todoColumns = ['todo', 'dueDate', 'createdDate', 'isComplete'];
   todos: Todo[] = [];
   errorMessage: string = '';
+  today = new Date();
 
   ngOnInit() {
     this.getTodos();
@@ -87,6 +88,12 @@ export class TodosComponent {
   emitUpdateTodoText(event: any, todo: any) {
     const newValue = event.target.value;
     this.updateTodoText$.next({ newValue, todo });
+  }
+
+  isPastDue(todo: Todo): any {
+    if(todo.isComplete) return;  
+    if(!this.dateValidationService.isValidDate(todo.dueDate)) return;
+    return new Date(todo.dueDate!) < new Date();
   }
 }
 

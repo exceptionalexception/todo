@@ -70,7 +70,7 @@ namespace Api.Controllers
         }
 
         [HttpPut]
-        [Route("{todoId}/update")]
+        [Route("update")]
         [ProducesResponseType(typeof(TodoDto), 200)]
         public async Task<IActionResult> UpdateTodo([FromBody] TodoDto todo)
         {
@@ -88,7 +88,7 @@ namespace Api.Controllers
 
 
         [HttpPut]
-        [Route("{todoId}/complete")]
+        [Route("{todoUId}/complete")]
         public async Task<IActionResult> CompleteTodoById(Guid todoUId)
         {
             try
@@ -104,12 +104,12 @@ namespace Api.Controllers
         }
 
         [HttpDelete]
-        [Route("{todoId}")]
-        public async Task<IActionResult> DeleteTodoById(Guid todoId)
+        [Route("{todoUId}")]
+        public async Task<IActionResult> DeleteTodoById(Guid todoUId)
         {
             try
             {
-                await _todoManager.DeleteTodo(todoId);
+                await _todoManager.DeleteTodo(todoUId);
                 return Ok();
             }
             catch (Exception e)

@@ -22,7 +22,8 @@
                             [value]="todo.dueDate" 
                             placeholder="Due date"
                             (focus)="picker.open()"
-                            readonly>
+                            readonly
+                            [ngClass]="{'red-font': isPastDue(todo)}">
 
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>

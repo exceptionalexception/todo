@@ -28,6 +28,6 @@ export class TodoService {
   }
 
   updateTodo(todo: Todo): Observable<Todo> {
-    return this.httpClient.put<Todo>(`${AppConstants.ApiRoot}/todo/${todo.todoUId}/update`, todo);
+    return this.httpClient.put<Todo>(`${AppConstants.ApiRoot}/todo/update`, todo);
   }
 }

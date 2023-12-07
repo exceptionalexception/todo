@@ -68,7 +68,7 @@ namespace Business
 
             if (todo.ParentTodoUId != null)
             {
-                var parentTodo = await _todoRepo.GetTodo(todoUId);
+                var parentTodo = await _todoRepo.GetTodo(todo.ParentTodoUId.GetValueOrDefault());
                 var allSubTodosComplete = parentTodo.SubTodos.All(_ => _.IsComplete);
 
                 if (allSubTodosComplete)
