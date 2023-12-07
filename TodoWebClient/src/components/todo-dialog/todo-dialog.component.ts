@@ -11,18 +11,17 @@ import { DateValidationService } from '../../services/date-validation.service';
 })
 export class TodoDialogComponent{
   todo: Todo = new Todo('', new Date());
-  todoDialogTitle: string = 'Add Todo';
+  todoDialogTitle: string = ''
   errorMessage: string = '';
 
   constructor(
     private todoService: TodoService,
     private dateValidationService: DateValidationService,
     public dialogRef: MatDialogRef<TodoDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public existingTodo: Todo) 
+    @Inject(MAT_DIALOG_DATA) public parentTodoId: string | null) 
     { 
-      if(existingTodo) {
-        this.todo = existingTodo;
-      }
+        this.todo.parentTodoUId = parentTodoId;
+        this.todoDialogTitle = this.todo.parentTodoUId ? 'Add Sub Todo' : 'Add Todo';
     }
 
   addTodo() {
@@ -40,6 +39,6 @@ export class TodoDialogComponent{
   }
 
   onCloseClick(): void {
-    this.dialogRef.close(this.todo);
+    this.dialogRef.close();
   }
 }

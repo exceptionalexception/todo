@@ -62,7 +62,21 @@ namespace Business
 
         public async Task CompleteTodo(Guid todoUId)
         {
-            await _todoRepo.CompleteTodo(todoUId);
+            var todo = await _todoRepo.GetTodo(todoUId);
+            todo.IsComplete = true;
+            await _todoRepo.UpdateTodo(todo);
+
+            if (todo.ParentTodoUId != null)
+            {
+                var parentTodo = await _todoRepo.GetTodo(todoUId);
+                var allSubTodosComplete = parentTodo.SubTodos.All(_ => _.IsComplete);
+
+                if (allSubTodosComplete)
+                {
+                    parentTodo.IsComplete = true;
+                    await _todoRepo.UpdateTodo(parentTodo);
+                }
+            }
         }
 
         public async Task DeleteTodo(Guid todo)
@@ -71,6 +85,13 @@ namespace Business
             {
                 var todoToDelete = await _todoRepo.GetTodo(todo) 
                     ?? throw new Exception("Todo was not found.");
+
+                if (todoToDelete.SubTodos.Count != 0)
+                {
+                    todoToDelete.SubTodos.ForEach(async _ => 
+                        await _todoRepo.DeleteTodo(_)
+                    );
+                }
 
                 await _todoRepo.DeleteTodo(todoToDelete);
             }

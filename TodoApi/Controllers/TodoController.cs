@@ -89,11 +89,11 @@ namespace Api.Controllers
 
         [HttpPut]
         [Route("{todoId}/complete")]
-        public async Task<IActionResult> CompleteTodoById(Guid todoId)
+        public async Task<IActionResult> CompleteTodoById(Guid todoUId)
         {
             try
             {
-                await _todoManager.CompleteTodo(todoId);
+                await _todoManager.CompleteTodo(todoUId);
                 return Ok();
             }
             catch (Exception e)

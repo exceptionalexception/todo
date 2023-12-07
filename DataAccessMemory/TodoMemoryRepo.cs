@@ -13,40 +13,52 @@ namespace DataAccessMemory
             InitializeTodos();
         }
 
-        private List<Todo> Todos;
+        private static List<Todo>? AllTodos;
+
 
         public async Task<IEnumerable<Todo>> GetTodos()
         {
-            return Todos;
+            return AllTodos?
+                .Where(t => t.ParentTodoUId == null)
+                .Select(_ => {
+                    _.SubTodos = AllTodos?.Where(t => t.ParentTodoUId == _.TodoUId).ToList() ?? [];
+                    return _;
+                }).ToList() ?? Enumerable.Empty<Todo>();
         }
 
         public async Task<Todo> GetTodo(Guid todoUId)
         {
-            return Todos.FirstOrDefault(t => t.TodoUId == todoUId);
+            var todo = AllTodos.FirstOrDefault(t => t.TodoUId == todoUId);
+
+            if (todo != null)
+            {
+                todo.SubTodos = AllTodos.Where(t => t.ParentTodoUId == todo.TodoUId).ToList();
+            }
+
+            return todo;
         }
 
         public async Task<Todo> AddTodo(Todo todo)
         {
             todo.TodoUId = Guid.NewGuid();
-            Todos.Add(todo);
+            AllTodos.Add(todo);
             return todo;
         }
 
-        public async Task DeleteTodo(Todo todo) 
-        { 
-            Todos.Remove(todo);
+        public async Task DeleteTodo(Todo todo)
+        {
+            AllTodos = AllTodos.Where(_ => _.TodoUId != todo.TodoUId).ToList();
         }
 
         public async Task<Todo> UpdateTodo(Todo todo)
         {
             try
             {
-                var todoToUpdate = Todos.FirstOrDefault(t => t.TodoUId == todo.TodoUId) 
+                var todoToUpdate = AllTodos.FirstOrDefault(t => t.TodoUId == todo.TodoUId)
                     ?? throw new Exception("Todo was not found.");
 
                 todoToUpdate.TodoText = todo.TodoText;
                 todoToUpdate.DueDate = todo.DueDate;
-                todoToUpdate.CreatedDate = todo.CreatedDate;
                 todoToUpdate.ParentTodoUId = todo.ParentTodoUId;
                 todoToUpdate.ParentTodo = todo.ParentTodo;
                 todoToUpdate.SubTodos = todo.SubTodos;
@@ -56,22 +68,6 @@ namespace DataAccessMemory
             catch (Exception e)
             {
                 _logger.LogError(e, "Error updating todo.");
-                throw;
-            }
-        }
-
-        public async Task CompleteTodo(Guid todoUId)
-        {
-            try
-            {
-                var todoToComplete = Todos.FirstOrDefault(t => t.TodoUId == todoUId)
-                    ?? throw new Exception("Error updating todo. Todo was not found.");
-
-                todoToComplete.IsComplete = true;
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, "Error completing todo.");
                 throw;
             }
         }
@@ -98,7 +94,6 @@ namespace DataAccessMemory
             var todo7 = new Todo { TodoUId = Guid.NewGuid(), TodoText = "Eat.", DueDate = DateTime.Now.AddHours(-20), CreatedDate = DateTime.Now };
             var todo8 = new Todo { TodoUId = Guid.NewGuid(), TodoText = "Eat.", DueDate = DateTime.Now.AddHours(-50), CreatedDate = DateTime.Now };
 
-            Todos = new List<Todo> { todo1, todo2, todo3, todo4, todo5, todo6, todo7, todo8 };
-        }
+            AllTodos = new List<Todo> { todo1, todo2, todo3, todo4, todo5, todo6, todo7, todo8, todo1a, todo1b, todo1c };   }
     }
 }

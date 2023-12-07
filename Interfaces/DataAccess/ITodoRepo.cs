@@ -1,5 +1,4 @@
 ﻿using Models;
-using System.Collections;
 
 namespace Interfaces
 {
@@ -9,7 +8,6 @@ namespace Interfaces
         Task<Todo> GetTodo(Guid todoUId);
         Task<Todo> AddTodo(Todo todo);
         Task<Todo> UpdateTodo(Todo todo);
-        Task CompleteTodo(Guid todoUId);
         Task DeleteTodo(Todo todo);
     }
 }

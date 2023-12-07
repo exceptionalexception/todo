@@ -44,6 +44,10 @@ export class TodosComponent {
   errorMessage: string = '';
 
   ngOnInit() {
+    this.getTodos();
+  }
+  
+  getTodos() {
     this.todoService.getTodos().subscribe((todos: Todo[]) => {
       this.todos = todos || [];
     });
@@ -52,29 +56,22 @@ export class TodosComponent {
   openTodoDialog(todo?: Todo | null): void {
     let dialogRef = this.dialog.open(TodoDialogComponent, {
       width: '30%',
-      data: todo
+      data: todo?.todoUId || null
     });
 
     dialogRef.afterClosed().subscribe((newTodo: Todo) => {
-      this.todos.push(newTodo);
+      this.getTodos();
     });
   }
 
   deleteTodo(todo: Todo) {
     if(!todo?.todoUId) return;
-    this.todoService.deleteTodo(todo.todoUId).subscribe(() => {
-      this.todos = this.todos.filter(t => t.todoUId !== todo.todoUId);
-    });
+    this.todoService.deleteTodo(todo.todoUId).subscribe(() => this.getTodos());
   }
 
   completeTodo(todo: Todo) {
     if(!todo?.todoUId) return;
-    this.todoService.completeTodo(todo.todoUId).subscribe(() => {
-      const index = this.todos.findIndex(t => t.todoUId === todo.todoUId);
-      if (index !== -1) {
-        this.todos[index].isComplete = true;
-      }
-    });
+    this.todoService.completeTodo(todo.todoUId).subscribe(() => this.getTodos());
   }
 
   updateTodo(todo: Todo) {
