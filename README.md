@@ -3,7 +3,7 @@
 #### Todo API Setup
 1) Install dotnet 8 SDK - https://dotnet.microsoft.com/en-us/download
 2) Download Visual Studio 2022
-3) Open the TodoApp.sln
+3) Open the TodoApi/TodoApp.sln
 4) Observe the launch options: There are two launch options; In-Memory and Local DB. ![Alt text](image-4.png) 
 
 ##### Using the DB debug mode 
@@ -20,19 +20,20 @@ When application is in DB mode it will register DB repo rather than in memory re
 All API endpoints can be tested via swagger.
 
 ### Todo Client App Setup Instructions
-1) Install NodeJS and npm 20.10.0 (if doesnt exist) from https://nodejs.org/dist/v20.10.0/node-v20.10.0-x64.msi
-2) Verify node & npm installations by checking version in cmd
+1) Download and install Visual Studio Code.
+2) Install NodeJS and npm 20.10.0 (if doesnt exist) from https://nodejs.org/dist/v20.10.0/node-v20.10.0-x64.msi
+3) Using visual studio codes terminal verify node & npm installations 
 	```node -v```
 	```npm -v```
-3) Install Angular CLI globally (if doesn't exist)
+5) Install Angular CLI globally (if doesn't exist)
 	If the execution policy hasn't been enabled previous then run 👇 
 	```Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned```
-4) Run these npm commands 
+6) Run these npm commands 
 - Run ```npm install -g @angular/cli```
 - Run ```npm i```
 - Run ```npm run local```
-- Navigate to http://localhost:4200/
-
+- Navigate to http://localhost:4200/ 
+ 
 
 ### Application Views 
 Application has 2 views; list, and tiles. Please try both views.
