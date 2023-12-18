@@ -59,8 +59,8 @@ namespace Api.Controllers
         {
             try
             {
-                var todoAdded = await _todoManager.AddTodo(todo);
-                return Ok(todoAdded);
+                await _todoManager.AddTodo(todo);
+                return Ok();
             }
             catch (Exception e)
             {

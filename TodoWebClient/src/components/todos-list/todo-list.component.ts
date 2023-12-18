@@ -62,9 +62,9 @@ export class TodoListComponent {
       data: todo?.todoUId || null
     });
 
-    dialogRef.afterClosed().subscribe((newTodo: Todo) => {
-      this.getTodos();
-    });
+    dialogRef.afterClosed().subscribe(() => 
+      this.getTodos()
+    );
   }
 
   deleteTodo(todo: Todo) {

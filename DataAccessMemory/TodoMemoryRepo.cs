@@ -14,7 +14,7 @@ namespace DataAccessMemory
             InitializeTodos();
         }
 
-        private static List<Todo>? AllTodos;
+        private static List<Todo>? AllTodos = AllTodos ?? [];
 
 
         public async Task<IEnumerable<Todo>> GetTodos()
@@ -39,12 +39,11 @@ namespace DataAccessMemory
             return todo;
         }
 
-        public async Task<Todo> AddTodo(Todo todo)
+        public async Task AddTodo(Todo todo)
         {
             todo.TodoUId = Guid.NewGuid();
             todo.CreatedDate = todo.CreatedDate;
             AllTodos.Add(todo);
-            return todo;
         }
 
         public async Task DeleteTodo(Todo todo)

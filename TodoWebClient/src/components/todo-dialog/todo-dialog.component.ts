@@ -39,10 +39,8 @@ export class TodoDialogComponent{
         this.errorMessage = 'An error occurred while attempting to add the todo.';
         return of(null);
       })
-    ).subscribe((addedTodo: Todo | null) => {
-      if (addedTodo) {
-        this.dialogRef.close(addedTodo);
-      }
+    ).subscribe(() => {
+        this.dialogRef.close();
     });
   }
 

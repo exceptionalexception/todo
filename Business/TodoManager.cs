@@ -29,14 +29,10 @@ namespace Business
             return todoDb.ToDto();
         }
 
-        public async Task<TodoDto> AddTodo(TodoDto todo)
+        public async Task AddTodo(TodoDto todo)
         {
             var todoToAdd = todo.ToModel();
-            todoToAdd.CreatedDate = DateTime.Now;
-            todoToAdd.IsComplete = false;
-            todoToAdd.TodoUId = Guid.NewGuid();
-            var todoDb = await _todoRepo.AddTodo(todoToAdd);
-            return todoDb.ToDto();
+            await _todoRepo.AddTodo(todoToAdd);
         }
 
         public async Task CompleteTodo(Guid todoUId)

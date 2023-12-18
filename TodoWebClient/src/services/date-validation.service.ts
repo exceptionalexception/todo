@@ -7,7 +7,7 @@ export class DateValidationService {
 
   constructor() { }
 
-  isValidDate(value: any): boolean {
+  isValidDate(value: Date | null | undefined): boolean {
     if (value === null || value === undefined) {
       return false;
     }

@@ -32,7 +32,8 @@ namespace DataAccessDb
                         {nameof(Todo.CreatedDate)},
                         {nameof(Todo.IsComplete)},
                         {nameof(Todo.ParentTodoUId)}
-                    FROM Todos;
+                    FROM Todos
+                    WHERE {nameof(Todo.ParentTodoUId)} IS NULL;
 
                     SELECT 
                         {nameof(Todo.TodoUId)}, 
@@ -47,16 +48,15 @@ namespace DataAccessDb
                 conn.Open();
                 using var multi = await conn.QueryMultipleAsync(query);
 
-                var allTodos = multi.Read<Todo>().ToList() ?? [];
-                
-                var allSubTodos = multi.Read<Todo>().ToList() ?? [];
-                foreach (var todo in allTodos)
+                var parentTodos = multi.Read<Todo>() ?? [];
+                var subTodos = multi.Read<Todo>() ?? [];
+                foreach (var todo in parentTodos)
                 {
-                    todo.SubTodos = allSubTodos
+                    todo.SubTodos = subTodos
                         .Where(st => st.ParentTodoUId == todo.TodoUId)
                         .ToList();
                 }
-                return allTodos.Where(t => t.ParentTodoUId == null).ToList();
+                return parentTodos.ToList();
             }
             catch (Exception e)
             {
@@ -65,41 +65,25 @@ namespace DataAccessDb
             }
         }
 
-        public async Task<Todo> AddTodo(Todo todo)
+        public async Task AddTodo(Todo todo)
         {
             try
             {
                 using IDbConnection conn = _todoDb.Connection;
                 var query =
                     @$"INSERT INTO Todos (
-                {nameof(Todo.TodoUId)}, 
-                {nameof(Todo.TodoText)}, 
-                {nameof(Todo.DueDate)},
-                {nameof(Todo.CreatedDate)},
-                {nameof(Todo.IsComplete)},
-                {nameof(Todo.ParentTodoUId)}
-            ) 
-            VALUES (
-                @{nameof(Todo.TodoUId)}, 
-                @{nameof(Todo.TodoText)}, 
-                @{nameof(Todo.DueDate)},
-                @{nameof(Todo.CreatedDate)},
-                @{nameof(Todo.IsComplete)},
-                @{nameof(Todo.ParentTodoUId)}
-            );
-            
-            SELECT 
-                {nameof(Todo.TodoUId)}, 
-                {nameof(Todo.TodoText)}, 
-                {nameof(Todo.DueDate)},
-                {nameof(Todo.CreatedDate)},
-                {nameof(Todo.IsComplete)},
-                {nameof(Todo.ParentTodoUId)}
-            FROM Todos
-            WHERE {nameof(Todo.TodoUId)} = @{nameof(Todo.TodoUId)};";
+                        {nameof(Todo.TodoText)}, 
+                        {nameof(Todo.DueDate)},
+                        {nameof(Todo.ParentTodoUId)}
+                    ) 
+                    VALUES (
+                        @{nameof(Todo.TodoText)}, 
+                        @{nameof(Todo.DueDate)},
+                        @{nameof(Todo.ParentTodoUId)}
+                    );";
+
                 conn.Open();
-                var result = await conn.QuerySingleAsync<Todo>(query, todo);
-                return result;
+                await conn.ExecuteAsync(query, todo);
             }
             catch (Exception e)
             {
